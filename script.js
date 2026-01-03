@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initParallax();
     initTilt();
     initHeroParticles();
-    initCursorFollower();
     populateProjects();
     initContactForm();
     initSectionRouting();
@@ -228,20 +227,7 @@ function initHeroParticles(){
 }
 
 // Cursor follower - subtle blurred circle
-function initCursorFollower(){
-    const follower = document.createElement('div');
-    follower.className = 'cursor-follower';
-    document.body.appendChild(follower);
-    let mouseX=-100, mouseY=-100, fx=-100, fy=-100;
-    window.addEventListener('mousemove', e=>{ mouseX = e.clientX; mouseY = e.clientY; });
-    function loop(){ fx += (mouseX - fx) * 0.16; fy += (mouseY - fy) * 0.16; follower.style.transform = `translate(${fx}px, ${fy}px)`; requestAnimationFrame(loop); }
-    loop();
-    // enlarge on hover of interactive elements
-    document.querySelectorAll('a, button, .open-repo, .btn').forEach(el=>{
-        el.addEventListener('mouseenter', ()=> follower.style.transform += ' scale(1.16)');
-        el.addEventListener('mouseleave', ()=> follower.style.transform = follower.style.transform.replace(' scale(1.16)',''));
-    });
-}
+// Cursor follower removed — functionality intentionally disabled.
 
 // Fetch README excerpts from GitHub raw URLs.
 // Tries 'main' then 'master'. If fails, shows placeholder.
