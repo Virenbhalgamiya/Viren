@@ -66,6 +66,21 @@ body{
 .navbar-brand{color:var(--text-primary);font-weight:700}
 .nav-link{color:var(--text-secondary);opacity:.85}
 
+/* Mobile menu overlay: reduce heaviness, increase transparency, add subtle radius */
+@media (max-width:767.98px){
+  .top-nav .collapse.show{
+    /* reduce blur by ~35% (from 8px -> 5px) and keep slight saturation */
+    backdrop-filter: blur(5px) saturate(110%);
+    /* make the overlay lighter/more transparent */
+    background: rgba(255,255,255,0.012);
+    border-radius:10px;
+    padding:6px 8px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.45);
+  }
+  /* center menu items when expanded on mobile for better visual balance */
+  .top-nav .collapse.show .nav{justify-content:center}
+}
+
 /* Global animated gradient mesh
    - Single subtle animated layer behind all content
    - Uses slow background-position animation (60s) of layered radial-gradients
@@ -187,6 +202,8 @@ body{
 .project-card.featured{min-height:320px;box-shadow:0 28px 90px rgba(0,0,0,0.7);border:1px solid rgba(255,255,255,0.06)}
 .project-card.featured .project-thumb{height:160px}
 .project-thumb{height:100px;border-radius:10px;background:linear-gradient(135deg,rgba(155,93,229,0.04),rgba(0,245,212,0.03));margin-bottom:12px}
+/* Images inside project thumbnails */
+.project-thumb img{width:100%;height:100%;object-fit:cover;display:block;border-radius:10px}
 .project-title{margin:0;font-weight:700;color:var(--text-primary);transition:color .18s}
 .project-card:hover .project-title{color:var(--accent-electric-purple)}
 .project-excerpt{color:var(--text-secondary);font-size:0.95rem;max-height:8.4em;overflow:hidden}
@@ -243,6 +260,17 @@ body{
   .profile-card{width:100%;height:auto}
   .section{padding:80px 0}
   .project-card{min-height:220px;padding:18px}
+}
+
+/* when sidebar is present on larger screens, offset main content to avoid overlap */
+@media (min-width:992px){
+  .content{margin-left:320px}
+}
+
+/* Increase section width so content fits beside the sidebar on large screens */
+@media (min-width:992px){
+  .portfolio-container{max-width:none;width:100%;padding:0 28px}
+  .content{margin-left:320px;max-width:none;width:calc(100% - 360px)}
 }
 
 /* Floating blobs behind sections for mobile adjustments */

@@ -20,31 +20,28 @@
 
 <!-- Global animated background (behind all content) -->
 <div id="vanta-bg" class="background-animation" aria-hidden="true"></div>
-<!-- Top navbar (replaces sidebar) -->
-<header class="top-nav nav-glass">
-    <div class="container d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between">
-        <!-- top row: brand left, hamburger right on small screens; on md+ the hamburger is hidden -->
-        <div class="w-100 d-flex justify-content-between align-items-center">
-            <div class="nav-brand">
-                <a href="#" class="navbar-brand">Viren Bhalgamiya</a>
-            </div>
-            <button class="btn btn-ghost d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="fas fa-bars"></i>
-            </button>
-        </div>
+<!-- Left sidebar (replaces top navbar) -->
+<aside class="sidebar" aria-label="Sidebar navigation">
+    <div class="sidebar-inner">
+        <div class="sidebar-name">Viren Bhalgamiya</div>
+        <div class="sidebar-role">AI Engineer • ML Specialist</div>
 
-        <!-- Collapsible nav: expands below the top row on small screens, aligned center; on md+ it's shown inline to the right -->
-        <div class="collapse d-md-block w-100 mt-2 mt-md-0" id="mainNav">
-            <nav class="nav flex-column flex-md-row align-items-center justify-content-center justify-content-md-end" aria-label="Main navigation">
-                <a href="#hero" class="nav-link py-2 px-0 px-md-3">Home</a>
-                <a href="#about" class="nav-link py-2 px-0 px-md-3">About</a>
-                <a href="#skills" class="nav-link py-2 px-0 px-md-3">Skills</a>
-                <a href="#projects" class="nav-link py-2 px-0 px-md-3">Projects</a>
-                <a href="#contact" class="nav-link py-2 px-0 px-md-3">Contact</a>
-            </nav>
+        <nav class="sidebar-nav mt-3" aria-label="Main navigation">
+            <ul>
+                <li><a class="nav-link" href="#hero">Home</a></li>
+                <li><a class="nav-link" href="#about">About</a></li>
+                <li><a class="nav-link" href="#skills">Skills</a></li>
+                <li><a class="nav-link" href="#projects">Projects</a></li>
+                <li><a class="nav-link" href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+
+        <div class="sidebar-socials mt-3">
+            <a class="social-link" href="https://github.com/Virenbhalgamiya" target="_blank"><i class="fab fa-github"></i></a>
+            <a class="social-link" href="https://www.linkedin.com/in/viren-bhalgamiya/" target="_blank"><i class="fab fa-linkedin"></i></a>
         </div>
     </div>
-</header>
+</aside>
 
 <div class="portfolio-container">
         <main class="content" role="main">
@@ -100,6 +97,8 @@
                             <div class="glass-card p-3 highlight-card">Backend &amp; APIs</div>
                             <div class="glass-card p-3 highlight-card">Agentic AI &amp; Automation</div>
                             <div class="glass-card p-3 highlight-card">Open to EU / US roles</div>
+                            <div class="glass-card p-3 highlight-card">Software Roles</div>
+                            <div class="glass-card p-3 highlight-card">Data Roles</div>
                         </div>
                     </div>
                 </div>
@@ -135,7 +134,10 @@
                             <li>AI / ML Engineer roles</li>
                             <li>Backend or GenAI-focused positions</li>
                             <li>Teams building real-world, scalable AI systems</li>
+                            <li>Software Roles</li>
+                            <li>Data Roles</li>
                         </ul>
+
                     </div>
                 </div>
             </div>
@@ -350,8 +352,11 @@
             <div class="row g-4" id="project-list">
                 <div class="col-md-6 col-lg-6">
                     <article class="project-card glass-card reveal featured" data-owner="Virenbhalgamiya" data-repo="langchain_chatbot" data-tech="LangChain,Streamlit,Docker,LLM">
-                        <div class="project-thumb"></div>
+                        <div class="project-thumb" style="background-image:url('assets/langchain_chatbot.png')">
+                            
+.                        </div>
                         <h5 class="project-title">LangChain Chatbot</h5>
+                        <!-- <img src="https://unsplash.com/photos/a-small-robot-is-standing-next-to-a-cell-phone-rNH2Pcgg888" /> -->
                         <p class="project-summary">A multi-page Streamlit collection demonstrating practical LangChain chatbot patterns: basic chat, context-aware memory, internet-enabled queries, and document / SQL / website integrations. The app showcases runnable chains and prompt templates to structure model interactions, with Docker support for deployment.</p>
                         <h6 class="mb-1">Key Features:</h6>
                         <ul class="project-features">
@@ -370,7 +375,7 @@
 
                 <div class="col-md-6 col-lg-6">
                     <article class="project-card glass-card reveal featured" data-owner="Virenbhalgamiya" data-repo="Collaborative-Research-Agent" data-tech="Transformers,Streamlit,Embeddings,NetworkX">
-                        <div class="project-thumb"></div>
+                        <div class="project-thumb"><img src="assets/research_agent.png" alt="Collaborative Research Agent"></div>
                         <h5 class="project-title">Collaborative Research Agent</h5>
                         <p class="project-summary">An automated literature-review agent that fetches papers (e.g., from arXiv), summarizes each paper using transformer models, detects contradictions via semantic similarity, and visualizes relationships and contradictions in an interactive graph. Built to accelerate research synthesis and expose conflicting findings.</p>
                         <h6 class="mb-1">Key Features:</h6>
@@ -390,7 +395,7 @@
 
                 <div class="col-md-6 col-lg-4">
                     <article class="project-card glass-card reveal" data-owner="Virenbhalgamiya" data-repo="Inventory-management" data-tech="MERN,MongoDB,Express,React,Node">
-                        <div class="project-thumb"></div>
+                        <div class="project-thumb"><img src="assets/inventory.png" alt="Inventory Management"></div>
                         <h5 class="project-title">Inventory Management (MERN CRUD)</h5>
                         <p class="project-summary">A MERN-stack inventory system demonstrating full CRUD for product records (create, read, update, delete). The repository includes a backend server and frontend client with instructions to run locally, and shows API interactions for listing and managing products stored in MongoDB.</p>
                         <h6 class="mb-1">Key Features:</h6>
@@ -409,7 +414,7 @@
 
                 <div class="col-md-6 col-lg-4">
                     <article class="project-card glass-card reveal" data-owner="Virenbhalgamiya" data-repo="AI-agent-for-cyber-security" data-tech="Agents,Cybersecurity,Automation">
-                        <div class="project-thumb"></div>
+                        <div class="project-thumb"><img src="assets/cyber_security.png" alt="AI Agent for Cyber Security"></div>
                         <h5 class="project-title">AI Agent for Cyber Security</h5>
                         <p class="project-summary">An AI agent framework for automating cybersecurity workflows: scanning, alert triage, and threat-intelligence enrichment. See the repo for implementation details and usage examples.</p>
                         <h6 class="mb-1">Key Features:</h6>
@@ -429,7 +434,7 @@
 
                 <div class="col-md-6 col-lg-4">
                     <article class="project-card glass-card reveal" data-owner="Virenbhalgamiya" data-repo="Expense-Management-System-with-AI-Insights" data-tech="FastAPI,React,Postgres,Groq,Chart.js">
-                        <div class="project-thumb"></div>
+                        <div class="project-thumb"><img src="assets/expense_mgt.png" alt="Expense Management System"></div>
                         <h5 class="project-title">Expense Management System with AI Insights</h5>
                         <p class="project-summary">A full-stack expense manager: FastAPI backend with PostgreSQL, React frontend, and Groq LLM integration to generate AI-driven financial insights. Supports JWT authentication, role-based access (employee / manager), analytics dashboards, and Docker deployment instructions.</p>
                         <h6 class="mb-1">Key Features:</h6>
@@ -449,7 +454,7 @@
 
                 <div class="col-md-6 col-lg-4">
                     <article class="project-card glass-card reveal" data-owner="Virenbhalgamiya" data-repo="Recommendfy-Project" data-tech="Flask,scikit-learn,TensorFlow,Recommender">
-                        <div class="project-thumb"></div>
+                        <div class="project-thumb"><img src="assets/recommend.png" alt="Recommendfy — E-Commerce Recommender"></div>
                         <h5 class="project-title">Recommendfy — E-Commerce Recommender</h5>
                         <p class="project-summary">An e-commerce recommendation system built with Flask that implements content-based, collaborative filtering, hybrid, and multi-model recommendation strategies. The repo covers data preprocessing, model training, and integration of recommendations into a Flask web app for serving personalized suggestions.</p>
                         <h6 class="mb-1">Key Features:</h6>
@@ -468,7 +473,7 @@
 
                 <div class="col-md-6 col-lg-4">
                     <article class="project-card glass-card reveal" data-owner="Virenbhalgamiya" data-repo="Customer-Segmentation" data-tech="K-Means,Clustering,Visualization">
-                        <div class="project-thumb"></div>
+                        <div class="project-thumb"><img src="assets/customer.png" alt="Customer Segmentation (K-Means)"></div>
                         <h5 class="project-title">Customer Segmentation (K‑Means)</h5>
                         <p class="project-summary">An exploration of customer segmentation using k-means clustering on a Mall Customers dataset (Kaggle). The README documents data exploration, visualization, and cluster-validation techniques (elbow, silhouette, gap statistic) to determine optimal k and interpret clusters for targeted marketing.</p>
                         <h6 class="mb-1">Key Features:</h6>
@@ -487,7 +492,7 @@
 
                 <div class="col-md-6 col-lg-4">
                     <article class="project-card glass-card reveal" data-owner="Virenbhalgamiya" data-repo="Chatbot_using_Langchain_with_memory" data-tech="LangChain,Google-Gemini,Memory">
-                        <div class="project-thumb"></div>
+                        <div class="project-thumb"><img src="assets/gemini.png" alt="LangChain Chatbot with Memory"></div>
                         <h5 class="project-title">LangChain Google Gemini Chatbot</h5>
                         <p class="project-summary">A Colab notebook showcasing a LangChain-based chatbot integrated with Google Gemini. Demonstrates message history (InMemoryChatMessageHistory), multiple sessions, prompt templates, message trimming to manage context, and runnable chains to compose model+memory behaviors.</p>
                         <h6 class="mb-1">Key Features:</h6>
@@ -506,7 +511,7 @@
 
                 <div class="col-md-6 col-lg-4">
                     <article class="project-card glass-card reveal" data-owner="Virenbhalgamiya" data-repo="Multilingual-Sentiment-analysis-dashboard" data-tech="LSTM,NaiveBayes,NLPreprocessing,Streamlit">
-                        <div class="project-thumb"></div>
+                        <div class="project-thumb"><img src="assets/sentiment_anal.jpg" alt="Multilingual Sentiment Analysis Dashboard"></div>
                         <h5 class="project-title">Multilingual Sentiment Analysis Dashboard</h5>
                         <p class="project-summary">A sentiment analysis project combining classical and deep models: TF‑IDF + Multinomial Naive Bayes and an LSTM (TensorFlow/Keras) for multilingual text classification. Includes preprocessing with NLTK/SpaCy, evaluation (confusion matrix), and a Streamlit dashboard for visualization.</p>
                         <h6 class="mb-1">Key Features:</h6>

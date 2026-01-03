@@ -15,14 +15,14 @@ document.addEventListener('DOMContentLoaded', () => {
     initHeroParticles();
     populateProjects();
     initContactForm();
-    initSectionRouting();
+    // removed section routing to allow normal vertical stacking and scrolling
     initSidebarSpy();
 });
 
 // Highlight sidebar nav items based on scroll position
 function initSidebarSpy(){
-    // Adapted to top-nav links (keeps original function name for compatibility)
-    const links = Array.from(document.querySelectorAll('.top-nav .nav-link'));
+    // Adapted to sidebar links
+    const links = Array.from(document.querySelectorAll('.sidebar .nav-link'));
     if(!links.length) return;
     const sections = links.map(l=> document.querySelector(l.getAttribute('href')) ).filter(Boolean);
     const observer = new IntersectionObserver((entries)=>{
@@ -48,13 +48,6 @@ function initSmoothScroll(){
         a.addEventListener('click', e=>{
             const href = a.getAttribute('href');
             if(href.length>1){
-                // If this is a top-nav link, let router handle showing sections
-                if(a.classList.contains('nav-link')){
-                    e.preventDefault();
-                    showSection(href.replace('#',''));
-                    return;
-                }
-
                 e.preventDefault();
                 const el = document.querySelector(href);
                 if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
@@ -351,6 +344,8 @@ function initContactForm(){
         document.addEventListener('simModalClosed', restore, { once:true });
     });
 }
+
+// Mobile nav lock removed — no scroll-lock behavior applied.
 
 // Creates and shows a simulated modal with the form values
 function showSimulatedModal({name,email,message,status, error, mailto}){
