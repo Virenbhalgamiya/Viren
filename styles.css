@@ -195,6 +195,47 @@ body{
 .skill-card:hover{transform:translateY(-6px) scale(1.03);box-shadow:0 18px 50px rgba(0,0,0,0.6);outline:2px solid rgba(0,245,212,0.04)}
 .skill-icon{font-size:18px;color:var(--accent-electric-purple);margin-bottom:6px}
 
+/* SKILLS - user request:
+   - Keep headings bold, but make all other text in the #skills section normal weight
+   - On small screens (<= 992px) center the contents of each skill block
+*/
+#skills .glass-card, #skills .skill-card, #skills .skills-grid, #skills .skills-grid * {
+  font-weight: 200 !important;
+}
+
+/* Preserve heading weight inside skills */
+#skills h1, #skills h2, #skills h3, #skills h4, #skills h5, #skills .section-header h2 {
+  font-weight: 900 !important;
+}
+
+@media (max-width:992px){
+  /* center skill cards and their internal content for mobile */
+  #skills .skills-grid{ justify-content:center; }
+  #skills .skill-card, #skills .glass-card{ text-align:center !important; margin-left:auto; margin-right:auto; }
+  /* center inline badges/lists inside skill cards */
+  #skills .skill-card .badge, #skills .tech-list, #skills .tech-list .badge{ display:inline-block; margin-left:auto; margin-right:auto; }
+}
+
+/* Stronger override: ensure all non-heading text inside #skills is normal weight
+   (this targets badges and nested elements which may be styled bold by Bootstrap) */
+#skills .glass-card,
+#skills .glass-card *,
+#skills .badge,
+#skills .glass-card .d-flex,
+#skills .glass-card .d-flex * {
+  font-weight: 400 !important;
+}
+
+/* Re-apply bold weight for actual heading elements inside skill cards */
+#skills .glass-card h1,
+#skills .glass-card h2,
+#skills .glass-card h3,
+#skills .glass-card h4,
+#skills .glass-card h5,
+#skills .glass-card h6 {
+  font-weight: 700 !important;
+}
+
 /* Highlight cards in About section */
 .highlight-card{border:1px solid rgba(255,255,255,0.04);border-radius:10px;background:transparent;padding:.8rem;box-shadow:0 8px 24px rgba(0,0,0,0.45);transition:transform .18s,box-shadow .18s}
 .highlight-card:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(0,0,0,0.6)}
