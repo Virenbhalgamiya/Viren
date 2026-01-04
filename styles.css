@@ -7,6 +7,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@400;600;700&display=swap');
 
+
 :root{
   /* Dark designer palette (user-specified) */
   --bg-0: #0D0D0D; /* Pure Charcoal */
@@ -26,12 +27,20 @@
 *{box-sizing:border-box}
 body{
   margin:0;
-  background: linear-gradient(180deg, var(--bg-0), var(--bg-1));
+  background: #ffffff;
   color:var(--text-primary);
-  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Poppins', sans-serif;
+  font-family: 'Grenze Gotisch', serif, 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Poppins', sans-serif;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
   scroll-behavior:smooth;
+}
+
+/* Utility class for explicit usage with configurable weight */
+.grenze-gotisch{
+  font-family: "Grenze Gotisch", serif !important;
+  font-optical-sizing: auto;
+  font-weight: var(--grenze-weight, 400) !important;
+  font-style: normal;
 }
 
 .portfolio-container{max-width:1200px;margin:0 auto;padding:0 20px}
@@ -79,49 +88,43 @@ body{
   }
   /* center menu items when expanded on mobile for better visual balance */
   .top-nav .collapse.show .nav{justify-content:center}
+  /* hide the left sidebar on small phones so only the mobile top-nav is visible */
+  .sidebar{display:none !important}
 }
 
-/* Global animated gradient mesh
-   - Single subtle animated layer behind all content
-   - Uses slow background-position animation (60s) of layered radial-gradients
-   - Dark base with soft violet + cyan accents
-   - Positioned fixed with z-index:-1 so it never intercepts clicks
-   - Opacity and blend chosen to keep content fully readable
-   Performance notes: only background-position animates; no canvases, no JS, slow duration to reduce CPU.
-*/
-.background-animation{
-  position:fixed;
-  inset:0;
-  z-index:0; /* above the body background, behind content */
-  pointer-events:none;
-  background-color: transparent;
-  /* two more-contrasting radial gradients with slightly higher alpha so they're visible on dark backgrounds */
-  background-image:
-    radial-gradient(28rem circle at 12% 18%, rgba(155,93,229,0.20), rgba(155,93,229,0.04) 35%, transparent 60%),
-    radial-gradient(26rem circle at 88% 82%, rgba(0,245,212,0.16), rgba(0,245,212,0.03) 30%, transparent 60%);
-  background-size: 160% 160%, 160% 160%;
-  background-repeat: no-repeat;
-  background-position: 0% 0%, 100% 100%;
-  mix-blend-mode: normal; /* ensure visible over dark page background */
-  opacity:0.30; /* slightly stronger but still subtle */
-  will-change: background-position, background-size, opacity;
-  transform: translateZ(0); /* hint to GPU */
-  /* slow movement + very slow gentle pulsation (background-size) */
-  animation: bg-mesh-move 80s linear infinite, bg-mesh-pulse 30s ease-in-out infinite alternate;
+/* Make mobile top-nav fixed and overlay the site */
+/* Mobile-only nav visibility controlled by project class */
+@media (max-width:992px){
+  .top-nav.mobile-only-nav{position:fixed;left:0;right:0;top:0;z-index:1300;display:flex}
+  .top-nav.mobile-only-nav .collapse{position:absolute;left:0;right:0;top:56px}
 }
 
-@keyframes bg-mesh-move{
-  0%{background-position:0% 0%,100% 100%}
-  50%{background-position:40% 60%,60% 40%}
-  100%{background-position:0% 0%,100% 100%}
+/* Explicit: hide sidebar for all viewports <= 992px (show at 993px and above) */
+@media (max-width:992px){
+  .sidebar{display:none !important}
 }
 
-@keyframes bg-mesh-pulse{
-  /* very subtle background-size + opacity pulse to add gentle breathing */
-  0%{background-size:155% 155%,155% 155%; opacity:0.28}
-  50%{background-size:165% 165%,165% 165%; opacity:0.34}
-  100%{background-size:155% 155%,155% 155%; opacity:0.30}
+/* Remove collapse height transition on mobile to avoid double-render flicker */
+@media (max-width:992px){
+  .top-nav.mobile-only-nav .collapse{transition:none !important;}
+  .top-nav.mobile-only-nav .collapse .nav{transition:none !important}
 }
+
+/* Make the mobile collapse overlay opaque enough to fully obscure the sidebar beneath */
+@media (max-width:992px){
+  .top-nav.mobile-only-nav .collapse.show{
+    background: rgba(8,8,8,0.92) !important;
+    backdrop-filter: blur(6px) saturate(110%);
+    border-radius:10px;
+    padding:12px 10px;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.6);
+  }
+  .top-nav.mobile-only-nav .collapse.show .nav{justify-content:center}
+}
+
+/* Background animation removed — use solid white background by default */
+.background-animation{ display:none !important; }
+
 
 /* Respect users who prefer reduced motion */
 @media (prefers-reduced-motion: reduce){
@@ -157,7 +160,7 @@ body{
 .profile-photo{width:120px;height:120px;border-radius:50%;border:6px solid rgba(255,255,255,0.08);object-fit:cover;z-index:1;box-shadow:0 10px 30px rgba(31,41,55,0.18);animation:float 6s ease-in-out infinite}
 
 /* Profile photo wrap with subtle gradient border for hero */
-.profile-photo-wrap{display:inline-block;padding:8px;border-radius:999px;background:linear-gradient(135deg, rgba(155,93,229,0.08), rgba(0,245,212,0.06));box-shadow:0 10px 30px rgba(0,0,0,0.45)}
+.profile-photo-wrap{display:inline-block;padding:8px;border-radius:999px;background:transparent;box-shadow:none}
 .profile-photo-wrap .profile-photo{width:200px;height:200px;border-radius:50%;border:6px solid rgba(10,10,10,0.18);}
 
 /* Subtle fade + slide-in for hero image (complements .reveal) */
@@ -197,11 +200,11 @@ body{
 .highlight-card:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(0,0,0,0.6)}
 
 /* Projects */
-.project-card{padding:18px;border-radius:10px;min-height:220px;display:flex;flex-direction:column;justify-content:space-between;transition:transform .28s ease,box-shadow .28s;background:var(--bg-2);border:1px solid rgba(255,255,255,0.06);box-shadow:0 8px 28px rgba(0,0,0,0.6)}
-.project-card:hover{transform:translateY(-8px) scale(1.02);box-shadow:0 28px 80px rgba(0,0,0,0.6);border-top:3px solid var(--accent-aqua)}
-.project-card.featured{min-height:320px;box-shadow:0 28px 90px rgba(0,0,0,0.7);border:1px solid rgba(255,255,255,0.06)}
+.project-card{padding:18px;border-radius:10px;min-height:220px;display:flex;flex-direction:column;justify-content:space-between;transition:transform .28s ease,box-shadow .28s;background:var(--bg-2);border:1px solid rgba(255,255,255,0.06);box-shadow:0 22px 64px rgba(0,0,0,0.14)}
+.project-card:hover{transform:translateY(-8px) scale(1.02);box-shadow:0 32px 100px rgba(0,0,0,0.16);border-top:3px solid var(--accent-aqua)}
+.project-card.featured{min-height:320px;box-shadow:0 36px 120px rgba(0,0,0,0.18);border:1px solid rgba(255,255,255,0.06)}
 .project-card.featured .project-thumb{height:160px}
-.project-thumb{height:100px;border-radius:10px;background:linear-gradient(135deg,rgba(155,93,229,0.04),rgba(0,245,212,0.03));margin-bottom:12px}
+.project-thumb{height:100px;border-radius:10px;background:linear-gradient(135deg,rgba(155,93,229,0.04),rgba(0,245,212,0.03));margin-bottom:12px;flex:0 0 auto;overflow:hidden}
 /* Images inside project thumbnails */
 .project-thumb img{width:100%;height:100%;object-fit:cover;display:block;border-radius:10px}
 .project-title{margin:0;font-weight:700;color:var(--text-primary);transition:color .18s}
@@ -209,6 +212,7 @@ body{
 .project-excerpt{color:var(--text-secondary);font-size:0.95rem;max-height:8.4em;overflow:hidden}
 .tech-list .badge{margin-right:6px;background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text-secondary);transition:transform .25s,background .25s}
 .project-card:hover .tech-list .badge{transform:translateY(-4px);background:rgba(0,245,212,0.04);color:var(--text-primary)}
+
 
 /* Override bootstrap outline primary (avoid blue) */
 .btn-outline-primary{color:var(--text-primary);border-color:rgba(255,255,255,0.06);background:transparent}
@@ -252,19 +256,62 @@ body{
 .reveal.delay-3{transition-delay:.36s}
 
 /* Responsive tweaks */
-@media (max-width:992px){
+@media (max-width:993px){
   .portfolio-container{flex-direction:column}
-  .sidebar{position:relative;width:100%;left:0;top:0;border-radius:0;padding:12px 18px;margin-bottom:18px}
+  .sidebar{display:none !important}
   .content{margin-left:0;padding:24px}
+  /* add top spacing when the fixed mobile navbar is present so hero is not overlapped */
+  .top-nav.mobile-only-nav ~ .portfolio-container{padding-top:72px}
   .hero-intro h1{font-size:34px}
   .profile-card{width:100%;height:auto}
   .section{padding:80px 0}
   .project-card{min-height:220px;padding:18px}
 }
 
+/* Edge case: ensure mobile navbar is visible at exactly 992px width
+   Bootstrap's `d-lg-none` hides at min-width:992px (including 992px). We force-show
+   the mobile navbar at that single-pixel width so users still see the toggle. */
+@media (width: 992px){
+  .top-nav.mobile-only-nav{display:flex !important}
+  .top-nav.mobile-only-nav .collapse{position:absolute;left:0;right:0;top:56px}
+  /* ensure main content still gets the top padding when navbar is forced visible */
+  .top-nav.mobile-only-nav ~ .portfolio-container{padding-top:72px}
+}
+
+/* When mobile nav is open, hide the sidebar via a body class to avoid flicker */
+.mobile-nav-open .sidebar{display:none !important}
+
+/* Mobile fix: prevent boxed content from overflowing their containers */
+@media (max-width:768px){
+  .glass-card, .project-card, .profile-card, .contact-card, .edu-card {word-break:break-word;overflow-wrap:anywhere}
+  .glass-card * , .project-card * {max-width:100%;box-sizing:border-box}
+  .badge, .tech-list .badge{white-space:normal;display:inline-block;max-width:100%;overflow-wrap:break-word}
+  .project-thumb img{height:auto;max-width:100%}
+  .content{padding-left:16px;padding-right:16px}
+}
+
+/* Mobile: stack hero intro above profile card and scale images */
+@media (max-width:767.98px){
+  .hero-section{min-height:54vh;padding-top:80px;padding-bottom:40px}
+  .hero-section .container{align-items:flex-start}
+  .hero-intro h1{font-size:28px}
+  .hero-intro p.lead{font-size:1rem}
+  .profile-card{flex-direction:column;align-items:center;text-align:center;padding:12px}
+  .profile-meta{display:block !important;margin-top:10px}
+  .profile-photo-wrap{padding:6px}
+  .profile-photo, .profile-photo-wrap .profile-photo{width:140px;height:140px;max-width:90vw}
+}
+
 /* when sidebar is present on larger screens, offset main content to avoid overlap */
 @media (min-width:992px){
   .content{margin-left:320px}
+}
+
+/* Hide the mobile toggling navbar at 993px and above */
+@media (min-width:993px){
+  .mobile-nav{ display: none !important; }
+  /* ensure any open state is cleared */
+  body.mobile-nav-open{ padding-top:0 !important; overflow: visible !important; }
 }
 
 /* Increase section width so content fits beside the sidebar on large screens */
@@ -327,3 +374,107 @@ body{
 
 /* ensure main content remains above the canvas (you already have this) */
 .portfolio-container, .content, footer{position:relative; z-index:1}
+
+/* Mobile navbar: make content and toggle icon black so logo and links are visible */
+.mobile-nav, .mobile-nav * { color: #000 !important; }
+.mobile-nav-toggler{ color: #000 !important; background: transparent; border: none; padding:6px; }
+.mobile-nav-toggler i{ color: #000 !important; }
+.mobile-nav-toggler:hover, .mobile-nav-toggler:focus{ color: #000 !important; text-decoration:none; box-shadow:none; }
+
+/* Make content inside all <section> elements black */
+/* Make content inside all <section> elements black (scoped to main content) */
+main.content section, main.content section * { color: #000 !important; }
+main.content section a, main.content section a * { color: #000 !important; }
+
+/* Ensure the Vanta background container uses white background and no decorative gradients */
+#vanta-bg{ background-color:#ffffff !important; background-image:none !important; opacity:1 !important; }
+#vanta-bg.background-animation{ background-image:none !important; }
+#vanta-bg canvas{ background-color:#ffffff !important; }
+
+/* Also clear the decorative .background-animation rules that set gradients */
+.background-animation{ background-image:none !important; background-color:#ffffff !important; opacity:1 !important; }
+
+/* Force mobile nav container to space-between (safety) and logo sizing */
+.mobile-nav .container{ justify-content:space-between !important }
+.mobile-logo-img{height:30px;width:auto;display:block}
+.sidebar-logo{display:block;width:140px;height:auto;margin:0 auto 8px}
+.mobile-logo{display:inline-flex;align-items:center;gap:8px;padding-top:6px}
+
+/* Ensure mobile logo is visible and prominent when the mobile navbar is shown */
+@media (max-width:992px){
+  .mobile-nav{ z-index:1400 !important; }
+  .mobile-logo-img{height:42px !important; width:auto !important; opacity:1 !important; visibility:visible !important; z-index:1500 !important; }
+  .mobile-logo{padding-left:10px !important}
+}
+
+/* Ensure mobile nav is fixed at top and its collapse panel appears above content */
+.mobile-nav{ position:fixed; left:0; right:0; top:0; z-index:1400 !important; }
+.mobile-nav .container{ position:relative; z-index:1401; }
+.mobile-nav .collapse{ position:fixed; left:0; right:0; top:56px; height:auto; max-height:60vh; display:none; opacity:0; transition:opacity .18s ease; z-index:1450; overflow:auto; -webkit-overflow-scrolling:touch; }
+.mobile-nav .collapse.show{ display:block !important; opacity:1 !important; }
+
+/* When the mobile nav is open, keep Vanta visible (navbar sits above it via z-index).
+  Previous behavior hid the animation entirely; that caused the animation to disappear
+  on toggle — restore visibility so animation continues running. */
+/* (rule intentionally removed) */
+
+
+/* Style mobile nav panel so black text reads on a light backdrop */
+.mobile-nav .mobile-nav-panel{
+  background: #ffffff !important;
+  color: #000 !important;
+  border-radius:10px;
+  padding:12px 18px;
+  box-shadow: 0 28px 80px rgba(0,0,0,0.12) !important;
+}
+.mobile-nav .mobile-nav-links .nav-link{ color:#000 !important; opacity:0.95 }
+.mobile-nav .mobile-nav-links .nav-link:hover{ color:#111 !important }
+
+/* Sidebar: force all sidebar content text to black only (user request) */
+.sidebar, .sidebar * { color: #000 !important; }
+
+/* Make sidebar background white and add shadow/border */
+.sidebar{
+  background: #ffffff !important;
+  border: 1px solid rgba(0,0,0,0.06) !important;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.14) !important;
+}
+
+/* Project cards: white background, black text, subtle shadow */
+.project-card{
+  background: #ffffff !important;
+  color: #000 !important;
+  border: 1px solid rgba(0,0,0,0.06) !important;
+  box-shadow: 0 22px 64px rgba(0,0,0,0.14) !important;
+}
+.project-card, .project-card *{ color: #000 !important; }
+
+/* Hero: darker content and subtle shadows (only visual weight + contrast) */
+#hero, #hero * { color: #070707 !important;  }
+#hero .hero-intro h1 { color: #050505 !important; text-shadow: 0 10px 36px rgba(0,0,0,0.18) !important; }
+#hero .lead, #hero p, #hero .small { color: #111 !important; text-shadow: 0 6px 24px rgba(0,0,0,0.12) !important; }
+#hero .profile-card { box-shadow: none !important; }
+#hero { box-shadow: inset 0 -40px 80px rgba(0,0,0,0.06), 0 48px 160px rgba(0,0,0,0.20) !important; }
+
+/* Darken content and social icons (user request) */
+:root{ --content-dark: #030303; --icons-dark: #111111; }
+/* Make main content slightly darker across the site */
+main.content, main.content * { color: var(--content-dark) !important; }
+.portfolio-container, .content, footer{ color: var(--content-dark) !important; }
+/* Ensure mobile nav and sidebar text use the darker color */
+.mobile-nav, .mobile-nav * { color: var(--content-dark) !important; }
+.sidebar, .sidebar * { color: var(--content-dark) !important; }
+
+/* Darken social icons (GitHub / LinkedIn) and ensure full opacity */
+.social-link i,
+.sidebar-socials .social-link i,
+.mobile-nav-socials .social-link i,
+.mobile-nav .social-link i,
+.mobile-nav .mobile-nav-socials i,
+.social-link.fab,
+.social-link.fas,
+.fab,
+.fas { color: var(--icons-dark) !important; opacity: 1 !important; filter: none !important; }
+
+/* small tweak: make nav links fully opaque for better contrast */
+.mobile-nav .mobile-nav-links .nav-link{ opacity:1 !important }

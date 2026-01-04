@@ -16,8 +16,69 @@ document.addEventListener('DOMContentLoaded', () => {
     populateProjects();
     initContactForm();
     // removed section routing to allow normal vertical stacking and scrolling
+    // initialize mobile toggling navbar behavior
+    (function initMobileToggleNavbar(){
+        var mobileNav = document.getElementById('mobileNav');
+        if (!mobileNav) return;
+        mobileNav.addEventListener('show.bs.collapse', function(){ document.body.classList.add('mobile-nav-open'); });
+        mobileNav.addEventListener('hidden.bs.collapse', function(){ document.body.classList.remove('mobile-nav-open'); });
+        // ensure clicking links inside closes the collapse (bootstrap provides data-bs-toggle but add safety)
+        var links = mobileNav.querySelectorAll('.nav-link');
+        links.forEach(function(l){ l.addEventListener('click', function(){ var inst = bootstrap.Collapse.getInstance(mobileNav); if (inst) inst.hide(); }); });
+        // on resize remove class when viewport becomes desktop
+        window.addEventListener('resize', function(){ if (window.innerWidth > 992) document.body.classList.remove('mobile-nav-open'); });
+    })();
     initSidebarSpy();
+    initMobileNavSidebarToggle();
 });
+
+// Hide sidebar while mobile top-nav collapse is open, restore on close if viewport allows
+function initMobileNavSidebarToggle(){
+    const collapseEl = document.getElementById('mobileNav');
+    const sidebar = document.querySelector('aside.sidebar');
+    if(!collapseEl || !sidebar) return;
+    // toggle a body class instead of manipulating inline styles to avoid flicker
+    // add class immediately to avoid flicker; measure height after collapse fully shown
+    collapseEl.addEventListener('show.bs.collapse', ()=>{
+        document.body.classList.add('mobile-nav-open');
+    });
+    collapseEl.addEventListener('shown.bs.collapse', ()=>{
+        try{
+            const h = collapseEl.getBoundingClientRect().height || 0;
+            // keep a small gap so the hero sits just below the navbar (not too far)
+            const GAP = 4; // px
+            const padding = Math.max(0, h - GAP);
+            const container = document.querySelector('.portfolio-container');
+            if(container){ container.style.paddingTop = padding + 'px'; }
+        }catch(e){ /* ignore measurement errors */ }
+    });
+    // use 'hidden' event to remove the class after collapse fully closes and restore layout
+    collapseEl.addEventListener('hidden.bs.collapse', ()=>{
+        document.body.classList.remove('mobile-nav-open');
+        const container = document.querySelector('.portfolio-container');
+        if(container){ container.style.paddingTop = ''; }
+    });
+
+    // ensure the class is removed if viewport is resized to desktop sizes
+    window.addEventListener('resize', ()=>{
+        if(window.matchMedia('(min-width:993px)').matches){
+            document.body.classList.remove('mobile-nav-open');
+            const container = document.querySelector('.portfolio-container');
+            if(container){ container.style.paddingTop = ''; }
+        }
+    }, {passive:true});
+
+    // also add immediate class on the toggle button press to avoid timing flicker
+    const toggles = document.querySelectorAll('[data-bs-target="#mobileNav"]');
+    toggles.forEach(btn=>{
+        btn.addEventListener('pointerdown', (e)=>{
+            // if collapse is currently closed, add class immediately so sidebar is hidden
+            if(!collapseEl.classList.contains('show')){
+                document.body.classList.add('mobile-nav-open');
+            }
+        });
+    });
+}
 
 // Highlight sidebar nav items based on scroll position
 function initSidebarSpy(){
